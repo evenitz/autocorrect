@@ -1,8 +1,8 @@
 package edu.brown.cs32.evenitz.autocorrect;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 public interface Suggester {
-    public ArrayList<Suggestion> suggestionsForPrefix(String prefix, String previous);
+    public HashSet<Suggestion> suggestionsForPrefix(String prefix, String previous);
     public void addFile(String fileName);
 }

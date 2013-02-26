@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class SmartRanker extends Ranker {
     
@@ -14,7 +15,13 @@ public class SmartRanker extends Ranker {
         this.buildKeyMap();
     }
     
-    public ArrayList<Suggestion> rankSuggestions(String word, ArrayList<Suggestion> suggestions) {
+    public ArrayList<Suggestion> rankSuggestions(String word, HashSet<Suggestion> suggestionSet) {
+        ArrayList<Suggestion> suggestions = new ArrayList<Suggestion>();
+        
+        for (Suggestion s : suggestionSet) {
+            suggestions.add(s);
+        }
+        
         this.word = word;
         this.calculateSuggestionErrorDistances(suggestions);
         
@@ -41,7 +48,6 @@ public class SmartRanker extends Ranker {
     
     public void setSuggestionErrorDistance(String prefix, Suggestion suggestion) {
         String suggestedWord = suggestion.getWord();
-        int prefixLength = prefix.length();
         int suggestionLength = suggestedWord.length();
         
         char[] prefixChars = prefix.toCharArray();
@@ -86,9 +92,6 @@ public class SmartRanker extends Ranker {
     }
     
     
-    
-    
-    
     public class SmartRankingComparator implements Comparator<Suggestion> {
         private String word = SmartRanker.this.word;
         @Override
@@ -113,4 +116,5 @@ public class SmartRanker extends Ranker {
             }
         }
     }
+    
 }

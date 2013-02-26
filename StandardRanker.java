@@ -3,6 +3,7 @@ package edu.brown.cs32.evenitz.autocorrect;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 
 public class StandardRanker extends Ranker {
     private String word;
@@ -19,10 +20,17 @@ public class StandardRanker extends Ranker {
      * 
      * @return ArrayList<Suggestion> The ranked list of suggestions
      */
-    public ArrayList<Suggestion> rankSuggestions(String word, ArrayList<Suggestion> suggestions) {
+    public ArrayList<Suggestion> rankSuggestions(String word, HashSet<Suggestion> suggestionSet) {
+        ArrayList<Suggestion> suggestions = new ArrayList<Suggestion>();
+        
+        for (Suggestion s : suggestionSet) {
+            suggestions.add(s);
+        }
+        
         this.word = word;
         Collections.sort(suggestions, new SimpleRankingComparator());
 
+        
         return suggestions;
     }
     

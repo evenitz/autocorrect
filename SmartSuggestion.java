@@ -50,9 +50,6 @@ public class SmartSuggestion implements Suggestion {
         int y1;
         int y2;
         while (i < prefLen && i < suggestionLen) {
-            System.out.println(i + " " + prefLen + " " + suggestionLen);
-            System.out.println(prefixMistakes);
-            System.out.println(suggestionMistakes);
             pref = prefixMistakes.get(i);
             sugg = suggestionMistakes.get(i);
             
@@ -61,7 +58,7 @@ public class SmartSuggestion implements Suggestion {
             y1 = pref / hashRowLength;
             y2 = sugg / hashRowLength;
             
-            System.out.println("x1 " + x1 + ", x2 " + x2 + ", y1 " + y1 + ", y2 " + y2);
+           // System.out.println("x1 " + x1 + ", x2 " + x2 + ", y1 " + y1 + ", y2 " + y2);
             
             totalDistance += Math.pow(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2), 0.5);
             
@@ -71,9 +68,9 @@ public class SmartSuggestion implements Suggestion {
         int diff = Math.abs(prefLen - suggestionLen);
         totalDistance += diff * 3;
         
-        System.out.println("TOTAl DISANCE: " + totalDistance);
+        //System.out.println("TOTAl DISANCE: " + totalDistance);
         this.mistakeDistanceScore = totalDistance;
-        System.out.println(mistakeDistanceScore);
+        //System.out.println(mistakeDistanceScore);
         
         this.calculateSmartScore();
     }

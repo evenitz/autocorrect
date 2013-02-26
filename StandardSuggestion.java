@@ -6,15 +6,13 @@ public class StandardSuggestion implements Suggestion {
     private String word;
     private int unigramScore;
     private int bigramScore;
-    private boolean isPrefix;
     
-    private StandardSuggestion() {}
+    //private StandardSuggestion() {}
     
     public StandardSuggestion(String word, int unigram, int bigram, boolean prefix) {
         this.word = word;
         this.unigramScore = unigram;
         this.bigramScore = bigram;
-        this.isPrefix = prefix;
     }
     
     public String getWord() {

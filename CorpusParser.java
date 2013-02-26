@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class CorpusParser {
     
@@ -56,7 +55,7 @@ public class CorpusParser {
                     this.index = 0;
                 }
             } catch (IOException e) {
-                //
+                System.out.println(e.getMessage());
             }
         }
         

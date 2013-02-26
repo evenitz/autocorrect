@@ -1,9 +1,6 @@
 package edu.brown.cs32.evenitz.autocorrect;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -19,23 +16,23 @@ public class StandardSuggester implements Suggester{
         this.addFile(fileName);
     }
     
-    public ArrayList<Suggestion> suggestionsForPrefix(String prefix, String previous) {
+    public HashSet<Suggestion> suggestionsForPrefix(String prefix, String previous) {
         HashSet<String> resultsSet = new HashSet<String>();
         
        // resultsSet.addAll(tree.wordsForPrefix(prefix));
         resultsSet.addAll(tree.LevenshteinDistanceWords(prefix, 2));
         resultsSet.addAll(tree.wordSplits(prefix));
-        ArrayList<Suggestion> words = new ArrayList<Suggestion>();
+        HashSet<Suggestion> words = new HashSet<Suggestion>();
         
-        arrayAddSuggestions(words, resultsSet, previous, false);
+        setAddSuggestions(words, resultsSet, previous, false);
         
         HashSet<String> prefixSet = new HashSet<String>();
         prefixSet.addAll(tree.wordsForPrefix(prefix));
-        arrayAddSuggestions(words, prefixSet, previous, true);
+        setAddSuggestions(words, prefixSet, previous, true);
         return words;
     }
     
-    private void arrayAddSuggestions(ArrayList<Suggestion> suggestions, HashSet<String> words, String previous, boolean isPrefix) {
+    private void setAddSuggestions(HashSet<Suggestion> suggestions, HashSet<String> words, String previous, boolean isPrefix) {
         int uniCount = 0;
         int biCount = 0;
         for (String w : words) {
