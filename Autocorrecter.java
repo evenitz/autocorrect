@@ -42,43 +42,4 @@ public class Autocorrecter {
         
         return words;
     }
-    
-    public static void main(String[] args) {
-        boolean gui = true;
-        Autocorrecter autocorrecter = new Autocorrecter("/Users/ethanvenitz/Documents/workspace/Autocorrect/sherlock.txt");
-        System.out.println("Done");
-        String line = "  ";
-        String word = "";
-        String previous = "";
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        
-        if (gui) {
-            JFrame frame = new JFrame("autocorrect");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            JComponent newContentPane = new AutocorrectPanel(autocorrecter);
-            newContentPane.setOpaque(true);
-            frame.setContentPane(newContentPane);
-            
-            frame.pack();
-            frame.setVisible(true);
-        } else {
-        
-        while (!line.equals("")) {
-            try {
-                line = br.readLine().toLowerCase();
-                String[] words = line.split("\\s+");
-                word = words[words.length - 1];
-                if (words.length > 1) {
-                    previous = words[words.length - 2];
-                }
-                System.out.println(autocorrecter.suggestionsForPrefix(word, previous));
-                System.out.println(autocorrecter.topSuggestions(word, previous, 5));
-            } catch (IOException ioe) {
-                System.out.println("ERROR: IO error reading input");
-                System.exit(1);
-            }
-        }
-    }
-    }
-    
 }
