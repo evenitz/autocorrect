@@ -16,12 +16,18 @@ public class StandardSuggester implements Suggester{
         this.addFile(fileName);
     }
     
+    /**
+     * suggestionsForPrefix
+     * generates a hashset of suggestions for a given word
+     * 
+     * @param prefix   the user inputted word
+     * @param previous the previous word
+     */
     public HashSet<Suggestion> suggestionsForPrefix(String prefix, String previous) {
         HashSet<String> resultsSet = new HashSet<String>();
-        
-       // resultsSet.addAll(tree.wordsForPrefix(prefix));
         resultsSet.addAll(tree.LevenshteinDistanceWords(prefix, 2));
         resultsSet.addAll(tree.wordSplits(prefix));
+        
         HashSet<Suggestion> words = new HashSet<Suggestion>();
         
         setAddSuggestions(words, resultsSet, previous, false);
@@ -32,6 +38,15 @@ public class StandardSuggester implements Suggester{
         return words;
     }
     
+    /**
+     * setAddSuggestions
+     * Takes a set of words and adds them to the set of suggestions
+     * 
+     * @param suggestions
+     * @param words
+     * @param previous
+     * @param isPrefix
+     */
     private void setAddSuggestions(HashSet<Suggestion> suggestions, HashSet<String> words, String previous, boolean isPrefix) {
         int uniCount = 0;
         int biCount = 0;
@@ -50,6 +65,14 @@ public class StandardSuggester implements Suggester{
         }
     }
     
+    /**
+     * addFile
+     * Takes a string representing a file name and parses the file
+     * for words to add to the prefix tree and unigrams and bigrams to
+     * add to their respective hashes.
+     * 
+     * @param fileName
+     */
     public void addFile(String fileName) {
         
         try {
@@ -66,6 +89,12 @@ public class StandardSuggester implements Suggester{
         }
     } 
     
+    /**
+     * addUnigram
+     * adds a unigram string to the unigram hashmap
+     * 
+     * @param unigram
+     */
     public void addUnigram(String unigram) {
         Integer count = 1;
         if (unigram.trim().equals("")) {
@@ -77,6 +106,13 @@ public class StandardSuggester implements Suggester{
         this.unigrams.put(unigram, count);
     }
     
+    /**
+     * addBigram
+     * takes two words and adds the bigram to the bigram hashset
+     * 
+     * @param s1 the first word
+     * @param s2 the second word
+     */
     public void addBigram(String s1, String s2) {
         Integer count = 1;
         String str1 = s1.trim();

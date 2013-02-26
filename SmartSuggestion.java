@@ -8,7 +8,6 @@ public class SmartSuggestion implements Suggestion {
     private int bigramScore;
     private final int hashRowLength = 10;
     
-    /* Field used in smart Ranking */
     private double rankScore;
     private double mistakeDistanceScore;
     private boolean isPrefix;
@@ -32,10 +31,14 @@ public class SmartSuggestion implements Suggestion {
         return this.bigramScore;
     }
     
-    public void setRankScore(int score) {
-        this.rankScore = score;
-    }
-    
+    /**
+     * calculateMistakeDistanceScore
+     * Takes an array of mistake locations represented as integers and calculates the relative
+     * distance of the mistake across the keyboard for this suggestion.
+     * 
+     * @param prefixMistakes
+     * @param suggestionMistakes
+     */
     public void calculateMistakeDistanceScore(ArrayList<Integer> prefixMistakes, ArrayList<Integer>suggestionMistakes) {
         int totalDistance = 0;
         
@@ -45,10 +48,10 @@ public class SmartSuggestion implements Suggestion {
         int i = 0;
         int pref;
         int sugg;
-        int x1;
-        int x2;
-        int y1;
-        int y2;
+        double x1;
+        double x2;
+        double y1;
+        double y2;
         while (i < prefLen && i < suggestionLen) {
             pref = prefixMistakes.get(i);
             sugg = suggestionMistakes.get(i);
@@ -60,21 +63,21 @@ public class SmartSuggestion implements Suggestion {
             
            // System.out.println("x1 " + x1 + ", x2 " + x2 + ", y1 " + y1 + ", y2 " + y2);
             
-            totalDistance += Math.pow(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2), 0.5);
-            
+            totalDistance += Math.pow(Math.pow(x2 - x1, 2.0) + Math.pow(y2 - y1, 2.0), 0.5);
             i++;
         }
         
         int diff = Math.abs(prefLen - suggestionLen);
         totalDistance += diff * 3;
         
-        //System.out.println("TOTAl DISANCE: " + totalDistance);
         this.mistakeDistanceScore = totalDistance;
-        //System.out.println(mistakeDistanceScore);
-        
         this.calculateSmartScore();
     }
     
+    /**
+     * calculateSmartScore
+     * calculates and sets this suggestion's score for smart rank
+     */
     public void calculateSmartScore() {
         double score = 0;
         

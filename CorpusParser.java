@@ -14,8 +14,6 @@ public class CorpusParser {
     private int lineSize;
     BufferedReader reader;
     
-   // private String fileName;
-    
     public CorpusParser(String fileName) throws FileNotFoundException {
         this.reader = new BufferedReader(new FileReader(fileName));
         this.previousWord = "";
@@ -25,38 +23,33 @@ public class CorpusParser {
             this.lineWords = line.split("\\s+");
             this.lineSize = lineWords.length;
         } catch (IOException e) {
-            
+            System.out.println(e.getMessage());
         }
     }
     
+    /**
+     * hasNext
+     * checks to see if there are any more words to be parsed
+     * 
+     * @return true if there are more words
+     */
     public boolean hasNext() {
         return line != null;
     }
     
+    /**
+     * next
+     * grabs the next unigram and bigram to be parsed from the file
+     * 
+     * @return an array with the next unigram and next bigram
+     */
     public String[] next() {
-        String unigram = "";
-        String bigram = "";
-        
-        
-        unigram = lineWords[index];
-        unigram = unigram.replaceAll("[^A-Za-z]", "");
-        unigram = unigram.trim();
-        bigram = this.previousWord;
+        String unigram = lineWords[index].replaceAll("[^A-Za-z]", "").trim();
+        String bigram = this.previousWord;
         this.index++;
         
         if (this.index >= this.lineSize) {
-            try {
-                this.line = this.reader.readLine();
-                
-                if (line != null) {
-                    line = line.toLowerCase();
-                    this.lineWords = this.line.split("\\s+");
-                    this.lineSize = this.lineWords.length;
-                    this.index = 0;
-                }
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
+            this.readNextLine();
         }
         
         this.previousWord = unigram;
@@ -65,13 +58,19 @@ public class CorpusParser {
         return grams;
     }
     
-    public static void main(String[] args) {
+    /**
+     * newLine
+     * reads a new line and updates the class
+     */
+    private void readNextLine() {
         try {
-            CorpusParser parser = new CorpusParser("/Users/ethanvenitz/Documents/workspace/Autocorrect/sherlock2.txt");
+            this.line = this.reader.readLine();
             
-            while (parser.hasNext()) {
-                String[] gram = parser.next();
-                System.out.println("Unigram: " + gram[0] + " bigram: " + gram[1]);
+            if (line != null) {
+                line = line.toLowerCase();
+                this.lineWords = this.line.split("\\s+");
+                this.lineSize = this.lineWords.length;
+                this.index = 0;
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());

@@ -38,6 +38,7 @@ public class Main {
         
         fileNames.add("/Users/ethanvenitz/Documents/workspace/Autocorrect/sherlock.txt");
         
+        /* Launches the gui version */
         if (gui) {
             JFrame frame = new JFrame("autocorrect");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,7 +48,9 @@ public class Main {
             
             frame.pack();
             frame.setVisible(true);
-        } else {
+        } 
+        /* Launches the terminal version */
+        else {
             AutocorrectTerminal terminal = new AutocorrectTerminal(autocorrecter);
             terminal.loop();
         }

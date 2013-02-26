@@ -15,6 +15,7 @@ public class SmartRanker extends Ranker {
         this.buildKeyMap();
     }
     
+    
     public ArrayList<Suggestion> rankSuggestions(String word, HashSet<Suggestion> suggestionSet) {
         ArrayList<Suggestion> suggestions = new ArrayList<Suggestion>();
         
@@ -30,7 +31,11 @@ public class SmartRanker extends Ranker {
         return suggestions;
     }
     
-    public void buildKeyMap() {
+    /**
+     * buildKeyMap
+     * builds a HashMap for each character to a number for user in determining error distance
+     */
+    private void buildKeyMap() {
         this.keyMap = new HashMap<Character, Integer>();
         char[] keys = {'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm'};
         int len = keys.length;
@@ -40,13 +45,28 @@ public class SmartRanker extends Ranker {
         }
     }
     
-    public void calculateSuggestionErrorDistances(ArrayList<Suggestion> suggestions) {
+    /**
+     * calculateSuggestionErrorDistances
+     * Loops through all of the suggestions to calculate its error distance
+     * 
+     * @param suggestions
+     */
+    private void calculateSuggestionErrorDistances(ArrayList<Suggestion> suggestions) {
         for (Suggestion s : suggestions) {
             this.setSuggestionErrorDistance(this.word, s);
         }
     }
     
-    public void setSuggestionErrorDistance(String prefix, Suggestion suggestion) {
+    /**
+     * setSuggestionErrorDistance
+     * Determines the characters that are the source of the errors of the suggestion relative
+     * to the word the user inputed and delegates to the suggestion object to determine the
+     * overall distance of that error on the keyboard.
+     * 
+     * @param prefix
+     * @param suggestion
+     */
+    private void setSuggestionErrorDistance(String prefix, Suggestion suggestion) {
         String suggestedWord = suggestion.getWord();
         int suggestionLength = suggestedWord.length();
         
@@ -91,7 +111,11 @@ public class SmartRanker extends Ranker {
         suggestion.calculateMistakeDistanceScore(prefixNumbers, suggNumbers);
     }
     
-    
+    /**
+     * SmartRankingComparator
+     * Implements a comparator for the SmartRanking class to sort Suggestions based on
+     * their score
+     */
     public class SmartRankingComparator implements Comparator<Suggestion> {
         private String word = SmartRanker.this.word;
         @Override
