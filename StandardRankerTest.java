@@ -10,7 +10,7 @@ public class StandardRankerTest {
 
     @Test
     public void fiveWordRank() {
-        StandardSuggester suggester = new StandardSuggester("/Users/ethanvenitz/Documents/workspace/Autocorrect/dictionary3.txt");
+        StandardSuggester suggester = new StandardSuggester("/Users/ethanvenitz/Documents/workspace/Autocorrect/dictionary3.txt", true, true, 2);
         StandardRanker ranker = new StandardRanker();
         ArrayList<Suggestion> suggestions = ranker.rankSuggestions("simpl", suggester.suggestionsForPrefix("simpl", "phrase"));
         

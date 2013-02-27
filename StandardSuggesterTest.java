@@ -11,7 +11,7 @@ public class StandardSuggesterTest {
 
     @Test
     public void fiveWordDictionarySuggestion() {
-      StandardSuggester suggester = new StandardSuggester("/Users/ethanvenitz/Documents/workspace/Autocorrect/dictionary3.txt");
+      StandardSuggester suggester = new StandardSuggester("/Users/ethanvenitz/Documents/workspace/Autocorrect/dictionary3.txt", true, true, 2);
       HashSet<Suggestion> set = suggester.suggestionsForPrefix("simpl", "phrase");
       ArrayList<String> strings = new ArrayList<String>();
       
@@ -24,7 +24,7 @@ public class StandardSuggesterTest {
 
     @Test
     public void newUnigram() {
-        StandardSuggester suggester = new StandardSuggester("/Users/ethanvenitz/Documents/workspace/Autocorrect/dictionary3.txt");
+        StandardSuggester suggester = new StandardSuggester("/Users/ethanvenitz/Documents/workspace/Autocorrect/dictionary3.txt", true, true, 2);
         
         suggester.addUnigram("first");
         
@@ -33,7 +33,7 @@ public class StandardSuggesterTest {
     
     @Test
     public void updateUnigram() {
-        StandardSuggester suggester = new StandardSuggester("/Users/ethanvenitz/Documents/workspace/Autocorrect/dictionary3.txt");
+        StandardSuggester suggester = new StandardSuggester("/Users/ethanvenitz/Documents/workspace/Autocorrect/dictionary3.txt", true, true, 2);
         
         suggester.addUnigram("first");
         suggester.addUnigram("first");
@@ -43,7 +43,7 @@ public class StandardSuggesterTest {
     
     @Test
     public void newBigram() {
-        StandardSuggester suggester = new StandardSuggester("/Users/ethanvenitz/Documents/workspace/Autocorrect/dictionary3.txt");
+        StandardSuggester suggester = new StandardSuggester("/Users/ethanvenitz/Documents/workspace/Autocorrect/dictionary3.txt", true, true, 2);
         
         suggester.addBigram("first", "word");
         
@@ -52,7 +52,7 @@ public class StandardSuggesterTest {
     
     @Test
     public void updateBigram() {
-        StandardSuggester suggester = new StandardSuggester("/Users/ethanvenitz/Documents/workspace/Autocorrect/dictionary3.txt");
+        StandardSuggester suggester = new StandardSuggester("/Users/ethanvenitz/Documents/workspace/Autocorrect/dictionary3.txt", true, true, 2);
         
         suggester.addBigram("first", "word");
         suggester.addBigram("first", "word");
