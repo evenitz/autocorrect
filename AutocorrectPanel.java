@@ -9,8 +9,8 @@ import javax.swing.event.*;
 
 public class AutocorrectPanel extends JPanel implements ListSelectionListener {
     
-    private JList list;
-    private DefaultListModel listModel;
+    private JList<String> list;
+    private DefaultListModel<String> listModel;
     private JTextArea textField; 
    
     private Autocorrecter autocorrecter;
@@ -21,9 +21,9 @@ public class AutocorrectPanel extends JPanel implements ListSelectionListener {
     public AutocorrectPanel(Autocorrecter autocorrecter) {
         super(new BorderLayout());
         this.autocorrecter = autocorrecter;
-        listModel = new DefaultListModel();
+        listModel = new DefaultListModel<String>();
         
-        list = new JList(listModel);
+        list = new JList<String>(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         list.setSelectedIndex(0);
         list.addListSelectionListener(this);
