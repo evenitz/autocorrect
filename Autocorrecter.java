@@ -9,7 +9,7 @@ public class Autocorrecter {
     private Ranker ranker;
     
     public Autocorrecter(String fileName, boolean prefix, boolean whitespace, int led, boolean smart) {
-        this.suggester = new StandardSuggester(fileName);
+        this.suggester = new StandardSuggester(fileName, prefix, whitespace,led);
         
         if (smart) {
             this.ranker = new SmartRanker();

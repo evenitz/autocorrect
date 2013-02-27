@@ -29,6 +29,7 @@ public class AutocorrectPanel extends JPanel implements ListSelectionListener {
         list.addListSelectionListener(this);
         list.setVisibleRowCount(5);
         JScrollPane listScrollPane = new JScrollPane(list);
+        
         JPanel textPanel = new JPanel();
         textField = new JTextArea(5, 30);
         TypeListener textListener = new TypeListener();
@@ -38,8 +39,8 @@ public class AutocorrectPanel extends JPanel implements ListSelectionListener {
         add(textPanel, BorderLayout.NORTH);
         add(listScrollPane, BorderLayout.CENTER);
         
-        textField.getInputMap().put( KeyStroke.getKeyStroke( "ENTER" ), "doEnterAction" );
-        textField.getActionMap().put( "doEnterAction", new EnterAction());
+        textField.getInputMap().put( KeyStroke.getKeyStroke( "ENTER" ), "completeAction" );
+        textField.getActionMap().put( "completeAction", new CompleteAction());
         
         textField.getInputMap().put( KeyStroke.getKeyStroke( "DOWN" ), "doUpAction" );
         textField.getActionMap().put( "doUpAction", new UpAction());
@@ -48,7 +49,12 @@ public class AutocorrectPanel extends JPanel implements ListSelectionListener {
         textField.getActionMap().put( "doDownAction", new DownAction());
     }
     
-    class EnterAction extends AbstractAction {
+    /**
+     * CompeteAction
+     * Used to map the enter key in the textfield to complete the
+     * current last word with the word selected in the list of suggestions
+     */
+    class CompleteAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override
@@ -73,6 +79,7 @@ public class AutocorrectPanel extends JPanel implements ListSelectionListener {
                 newLine += s;
                 newLine += " ";
             }
+            
             newLine.trim();
             textField.setText(newLine);
             listModel.removeAllElements();
@@ -80,6 +87,11 @@ public class AutocorrectPanel extends JPanel implements ListSelectionListener {
         
     }
     
+    /**
+     * UpAction
+     * Used to map the up key in the textfield to move the index of
+     * the list up by one.
+     */
     class UpAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
@@ -91,6 +103,11 @@ public class AutocorrectPanel extends JPanel implements ListSelectionListener {
         }
     }
     
+    /**
+     * DownAction
+     * Used to map the down key in the textfield to move the index of
+     * the list down by one.
+     */
     class DownAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
@@ -102,6 +119,11 @@ public class AutocorrectPanel extends JPanel implements ListSelectionListener {
         }
     }
     
+    /**
+     * TypeListener
+     * used to listen for typing in the textarea in order to update
+     * the list of autocorrect suggestions.
+     */
     class TypeListener implements ActionListener, DocumentListener {
         public void actionPerformed(ActionEvent e) {
             
@@ -122,6 +144,11 @@ public class AutocorrectPanel extends JPanel implements ListSelectionListener {
             updateList();
         }
         
+        /**
+         * updateList
+         * updates the list model with the top suggestions of the
+         * current last word.
+         */
         public void updateList() {
             listModel.removeAllElements();
             String[] words = textField.getText().toLowerCase().split("\\s+");
@@ -129,10 +156,10 @@ public class AutocorrectPanel extends JPanel implements ListSelectionListener {
             int len = words.length;
             String word = words[len - 1];
             String previous = "";
+            
             if (len > 1) {
                 previous = words[len - 2];
             }
-            
             
             ArrayList<String> suggestions = autocorrecter.topSuggestions(word, previous, 5);
             

@@ -44,18 +44,22 @@ public class CorpusParser {
      * @return an array with the next unigram and next bigram
      */
     public String[] next() {
-        String unigram = lineWords[index].replaceAll("[^A-Za-z]", "").trim();
-        String bigram = this.previousWord;
-        this.index++;
+        if (line != null) {
+            String unigram = lineWords[index].replaceAll("[^A-Za-z]", "").trim();
+            String bigram = this.previousWord;
+            this.index++;
         
-        if (this.index >= this.lineSize) {
-            this.readNextLine();
+            if (this.index >= this.lineSize) {
+                this.readNextLine();
+            }
+        
+            this.previousWord = unigram;
+        
+            String[] grams = {unigram, bigram};
+            return grams;
+        } else {
+            return null;
         }
-        
-        this.previousWord = unigram;
-        
-        String[] grams = {unigram, bigram};
-        return grams;
     }
     
     /**

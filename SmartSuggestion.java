@@ -78,17 +78,17 @@ public class SmartSuggestion implements Suggestion {
      * calculateSmartScore
      * calculates and sets this suggestion's score for smart rank
      */
-    public void calculateSmartScore() {
+    void calculateSmartScore() {
         double score = 0;
         
-        score += this.bigramScore * 3;
+        score += this.bigramScore * 5;
         score += this.unigramScore;
         
         if (isPrefix) {
-            score += 200;
+            score += 3000;
         }
         
-        score += (100 / (this.mistakeDistanceScore + 1));
+        score += (500 / (this.mistakeDistanceScore + 1));
         
         this.rankScore = score;
     }
@@ -97,8 +97,25 @@ public class SmartSuggestion implements Suggestion {
         return this.rankScore;
     }
     
+    void setMistakeDistance(double distance) {
+        this.mistakeDistanceScore = distance;
+    }
+    
     @Override
     public String toString() {
         return "{ " + this.word + " unigram: " + this.unigramScore + " bigram: " + this.bigramScore + " Prefix: " + this.isPrefix + " mistakeDistance: " + this.mistakeDistanceScore + " score: " + this.rankScore + " }";
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        SmartSuggestion suggestion = (SmartSuggestion) obj;
+        System.out.println(suggestion.getWord() + " " + this.getWord());
+        return suggestion.getWord().equals(this.getWord());
+        
+    }
+    
+    @Override
+    public int hashCode() {
+        return this.word.hashCode();
     }
 }

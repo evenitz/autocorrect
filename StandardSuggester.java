@@ -6,13 +6,22 @@ import java.util.HashSet;
 
 public class StandardSuggester implements Suggester{
     private PrefixTree tree;
+    private boolean prefix;
+    private boolean whitespace;
+    private int led;
+    
     HashMap<String, Integer> unigrams;
     HashMap<String, Integer> bigrams;
     
-    public StandardSuggester(String fileName) {
+    public StandardSuggester(String fileName, boolean prefix, boolean whitespace, int led) {
         this.tree = new PrefixTree();
         this.unigrams = new HashMap<String, Integer>();
         this.bigrams = new HashMap<String, Integer>();
+        
+        this.prefix = prefix;
+        this.whitespace = whitespace;
+        this.led = led;
+        
         this.addFile(fileName);
     }
     
@@ -25,16 +34,25 @@ public class StandardSuggester implements Suggester{
      */
     public HashSet<Suggestion> suggestionsForPrefix(String prefix, String previous) {
         HashSet<String> resultsSet = new HashSet<String>();
-        resultsSet.addAll(tree.LevenshteinDistanceWords(prefix, 2));
-        resultsSet.addAll(tree.wordSplits(prefix));
+        
+        if (this.led > 0) {
+            resultsSet.addAll(tree.LevenshteinDistanceWords(prefix, this.led));
+        }
+        
+        if (this.whitespace) {
+            resultsSet.addAll(tree.wordSplits(prefix));
+        }
         
         HashSet<Suggestion> words = new HashSet<Suggestion>();
         
         setAddSuggestions(words, resultsSet, previous, false);
-        
-        HashSet<String> prefixSet = new HashSet<String>();
-        prefixSet.addAll(tree.wordsForPrefix(prefix));
-        setAddSuggestions(words, prefixSet, previous, true);
+               
+        if (this.prefix) {
+            HashSet<String> prefixSet = new HashSet<String>();
+            prefixSet.addAll(tree.wordsForPrefix(prefix));
+            setAddSuggestions(words, prefixSet, previous, true);
+        }
+        System.out.println(words);
         return words;
     }
     
@@ -127,6 +145,14 @@ public class StandardSuggester implements Suggester{
         }
         
         this.bigrams.put(bigram, count);
+    }
+    
+    Integer getUnigram(String key) {
+        return this.unigrams.get(key);
+    }
+    
+    Integer getBigram(String key) {
+        return this.bigrams.get(key);
     }
     
 }

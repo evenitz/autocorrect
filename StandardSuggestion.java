@@ -41,4 +41,17 @@ public class StandardSuggestion implements Suggestion {
     public void calculateMistakeDistanceScore(ArrayList<Integer> prefixMistakes, ArrayList<Integer> suggestionMistakes) {
         //
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        StandardSuggestion suggestion = (StandardSuggestion) obj;
+        
+        return suggestion.getWord().equals(this.getWord());
+        
+    }
+    
+    @Override
+    public int hashCode() {
+        return this.word.hashCode();
+    }
 }
