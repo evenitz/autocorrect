@@ -8,8 +8,8 @@ public class Autocorrecter {
     private Suggester suggester;
     private Ranker ranker;
     
-    public Autocorrecter(String fileName, boolean prefix, boolean whitespace, int led, boolean smart) {
-        this.suggester = new StandardSuggester(fileName, prefix, whitespace,led);
+    public Autocorrecter(ArrayList<String> fileNames, boolean prefix, boolean whitespace, int led, boolean smart) {
+        this.suggester = new StandardSuggester(fileNames, prefix, whitespace,led);
         
         if (smart) {
             this.ranker = new SmartRanker();

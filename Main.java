@@ -34,7 +34,7 @@ public class Main {
             }
         }
         
-        Autocorrecter autocorrecter = new Autocorrecter("/Users/ethanvenitz/Documents/workspace/Autocorrect/sherlock.txt", prefix, whitespace, led, smart);
+        Autocorrecter autocorrecter = new Autocorrecter(fileNames, prefix, whitespace, led, smart);
         
         fileNames.add("/Users/ethanvenitz/Documents/workspace/Autocorrect/sherlock.txt");
         

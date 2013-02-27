@@ -1,6 +1,7 @@
 package edu.brown.cs32.evenitz.autocorrect;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -13,7 +14,7 @@ public class StandardSuggester implements Suggester{
     HashMap<String, Integer> unigrams;
     HashMap<String, Integer> bigrams;
     
-    public StandardSuggester(String fileName, boolean prefix, boolean whitespace, int led) {
+    public StandardSuggester(ArrayList<String> fileNames, boolean prefix, boolean whitespace, int led) {
         this.tree = new PrefixTree();
         this.unigrams = new HashMap<String, Integer>();
         this.bigrams = new HashMap<String, Integer>();
@@ -22,7 +23,9 @@ public class StandardSuggester implements Suggester{
         this.whitespace = whitespace;
         this.led = led;
         
-        this.addFile(fileName);
+        for (String fileName : fileNames) {        
+            this.addFile(fileName);
+        }
     }
     
     /**

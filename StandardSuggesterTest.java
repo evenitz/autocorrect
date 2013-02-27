@@ -11,20 +11,24 @@ public class StandardSuggesterTest {
 
     @Test
     public void fiveWordDictionarySuggestion() {
-      StandardSuggester suggester = new StandardSuggester("/Users/ethanvenitz/Documents/workspace/Autocorrect/dictionary3.txt", true, true, 2);
-      HashSet<Suggestion> set = suggester.suggestionsForPrefix("simpl", "phrase");
-      ArrayList<String> strings = new ArrayList<String>();
+        ArrayList<String> fileNames = new ArrayList<String>();
+        fileNames.add("/Users/ethanvenitz/Documents/workspace/Autocorrect/dictionary3.txt");
+        StandardSuggester suggester = new StandardSuggester(fileNames, true, true, 2);
+        HashSet<Suggestion> set = suggester.suggestionsForPrefix("simpl", "phrase");
+        ArrayList<String> strings = new ArrayList<String>();
       
-      for (Suggestion s : set) {
-          strings.add(s.getWord());
-      }
+        for (Suggestion s : set) {
+            strings.add(s.getWord());
+        }
       
-      assertTrue(strings.contains("simple") && strings.contains("simply") && strings.contains("simplistic") && strings.contains("simplify") && strings.contains("simpler"));
+        assertTrue(strings.contains("simple") && strings.contains("simply") && strings.contains("simplistic") && strings.contains("simplify") && strings.contains("simpler"));
     }
 
     @Test
     public void newUnigram() {
-        StandardSuggester suggester = new StandardSuggester("/Users/ethanvenitz/Documents/workspace/Autocorrect/dictionary3.txt", true, true, 2);
+        ArrayList<String> fileNames = new ArrayList<String>();
+        fileNames.add("/Users/ethanvenitz/Documents/workspace/Autocorrect/dictionary3.txt");
+        StandardSuggester suggester = new StandardSuggester(fileNames, true, true, 2);
         
         suggester.addUnigram("first");
         
@@ -33,7 +37,9 @@ public class StandardSuggesterTest {
     
     @Test
     public void updateUnigram() {
-        StandardSuggester suggester = new StandardSuggester("/Users/ethanvenitz/Documents/workspace/Autocorrect/dictionary3.txt", true, true, 2);
+        ArrayList<String> fileNames = new ArrayList<String>();
+        fileNames.add("/Users/ethanvenitz/Documents/workspace/Autocorrect/dictionary3.txt");
+        StandardSuggester suggester = new StandardSuggester(fileNames, true, true, 2);
         
         suggester.addUnigram("first");
         suggester.addUnigram("first");
@@ -43,7 +49,9 @@ public class StandardSuggesterTest {
     
     @Test
     public void newBigram() {
-        StandardSuggester suggester = new StandardSuggester("/Users/ethanvenitz/Documents/workspace/Autocorrect/dictionary3.txt", true, true, 2);
+        ArrayList<String> fileNames = new ArrayList<String>();
+        fileNames.add("/Users/ethanvenitz/Documents/workspace/Autocorrect/dictionary3.txt");
+        StandardSuggester suggester = new StandardSuggester(fileNames, true, true, 2);
         
         suggester.addBigram("first", "word");
         
@@ -52,7 +60,9 @@ public class StandardSuggesterTest {
     
     @Test
     public void updateBigram() {
-        StandardSuggester suggester = new StandardSuggester("/Users/ethanvenitz/Documents/workspace/Autocorrect/dictionary3.txt", true, true, 2);
+        ArrayList<String> fileNames = new ArrayList<String>();
+        fileNames.add("/Users/ethanvenitz/Documents/workspace/Autocorrect/dictionary3.txt");
+        StandardSuggester suggester = new StandardSuggester(fileNames, true, true, 2);
         
         suggester.addBigram("first", "word");
         suggester.addBigram("first", "word");
