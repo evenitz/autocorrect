@@ -36,8 +36,6 @@ public class Main {
         
         Autocorrecter autocorrecter = new Autocorrecter(fileNames, prefix, whitespace, led, smart);
         
-        fileNames.add("/Users/ethanvenitz/Documents/workspace/Autocorrect/sherlock.txt");
-        
         /* Launches the gui version */
         if (gui) {
             JFrame frame = new JFrame("autocorrect");
